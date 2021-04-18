@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo search</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- boostrap cnd -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    
+</head>
+<body id="main">
+    <div class="container">
+        <br><br>
+        <h1 style="text-align: center; overflow: hidden;">Photo Search App</h1>
+        <form id="myform">
+            <div class="form-group">
+                <input type="text" class="form-control" id="search" placeholder="search photo" required>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger btn-block">
+                    search photo
+                </button>
+            </div>
+            <div class="container" id="result"></div>
+        </form>
+    </div>
+
+
+    <!-- jquery cnd -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $("#myform").submit(function(event){
+            event.preventDefault()
+
+            var search = $("#search").val()
+
+            var url ="https://api.unsplash.com/search/photos?query="+search+"&client_id=1PX2T20QdMlMQMJ8oGTvjuiairNW75eiiVOoWjMfjmw&per_page=50"
+
+            $.ajax({
+                method:'GET',
+                url:url,
+                success:function(data){
+                    console.log(data)
+                    data.results.forEach(photo => {
+                        $("#result").prepend(`
+                            <img class="container" src="${photo.urls.regular}"/>
+                        `)
+                    });
+                }
+            })
+        })
+    </script>
+</body>
+</html>
